@@ -8,12 +8,21 @@
             <h1 id="app-header">Todo List</h1>
             <div id="list-form">
                 <form action="">
-                    <input type="text">
+                    <input id="list-value" type="text">
                 </form>
             </div>
             <div id="list-button">
-                <button>Add Item!</button>
+                <button onclick="addItem()">Add Item!</button>
+            </div>
+            <div>
+                <ul id=list-container style="list-style: none;"></ul>
+            </div>
+            <div id="buttons">
+                <button class="function-button">All</button>
+                <button class="function-button">Active</button>
+                <button class="function-button">Completed</button>
             </div>
         </div>
     </body>
+    <script src="app.js"></script>
 </html>
