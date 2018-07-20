@@ -4,6 +4,9 @@ let activeBtn = document.querySelector('#active-button')
 //Store all button in variable.
 let allBtn = document.querySelector('#all-button')
 
+//Store complete button in variable.
+let completeBtn = document.querySelector('#complete-button');
+
 //Create a query selector function similar to jQuery 
 const $ = (selector) => {
     return document.querySelector(selector);
@@ -45,10 +48,22 @@ const activeFunction = () => {
     }
 }
 
-//Add event listener to active button to run active function
+//Create a function that will filter out all active tasks
+const completeFunction = () => {
+    let listElements = Array.from(document.querySelectorAll('.list-item'));
+    for (let i=0; i<listElements.length; i++) {
+        let el = listElements[i];
+        if (!el.classList.contains('strike-item')) {
+            el.classList.toggle('removed-item');
+        }
+    }
+}
+
+//Add event listener to active button to run activeFunction
 activeBtn.addEventListener('click', activeFunction);
 
-//Add event listener to active button to run active function
+//Add event listener to all button to run allFunction
 allBtn.addEventListener('click', allFunction);
 
-//Create a function that will filter out all active tasks
+//Add event listener to complete button to run allFunction
+completeBtn.addEventListener('click', completeFunction);
