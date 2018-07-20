@@ -1,0 +1,7 @@
+.strike-item {
+    text-decoration: line-through;
+}
+
+.removed-item {
+    display: none;
+}

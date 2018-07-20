@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <div id="root">
@@ -15,12 +15,12 @@
                 <button onclick="addItem()">Add Item!</button>
             </div>
             <div>
-                <ul id=list-container style="list-style: none;"></ul>
+                <ul id="dynamic-list" style="list-style: none;"></ul>
             </div>
             <div id="buttons">
-                <button class="function-button">All</button>
-                <button class="function-button">Active</button>
-                <button class="function-button">Completed</button>
+                <button class="function-button" id="all-button">All</button>
+                <button class="function-button" id="active-button">Active</button>
+                <button class="function-button" id="complete-button">Completed</button>
             </div>
         </div>
     </body>

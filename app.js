@@ -1,10 +1,10 @@
+//Store the active button in a variable
+let activeBtn = document.querySelector('#active-button')
+
 //Create a query selector function similar to jQuery 
 const $ = (selector) => {
     return document.querySelector(selector);
 }
-
-const item = $('#dynamic-list').getElementsByTagName('li');
-
 
 //Create a function that will add user input to list of todo items
 const addItem = () => {
@@ -18,3 +18,21 @@ const addItem = () => {
     });
     return container.appendChild(li);                               //Append the list item to the ul tag and return the value
 }
+
+//Create a function that will show all list items
+
+//Create a function that will filter out all completed todo items
+const activeFunction = () => {
+    let listElements = Array.from(document.querySelectorAll('.list-item'));
+    for (let i=0; i<listElements.length; i++) {
+        let el = listElements[i];
+        if (el.classList.contains('strike-item')) {
+            el.classList.toggle('removed-item');
+        }
+    }
+}
+
+//Add event listener to active button to run active function
+activeBtn.addEventListener('click', activeFunction);
+
+//Create a function that will filter out all active tasks
