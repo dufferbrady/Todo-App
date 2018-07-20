@@ -1,6 +1,9 @@
 //Store the active button in a variable
 let activeBtn = document.querySelector('#active-button')
 
+//Store all button in variable.
+let allBtn = document.querySelector('#all-button')
+
 //Create a query selector function similar to jQuery 
 const $ = (selector) => {
     return document.querySelector(selector);
@@ -20,6 +23,16 @@ const addItem = () => {
 }
 
 //Create a function that will show all list items
+const allFunction = () => {
+    let listElements = Array.from(document.querySelectorAll('.list-item'));
+    for (let i=0; i<listElements.length; i++) {
+        let el = listElements[i];
+        if (el.classList.contains('removed-item')) {
+            el.classList.toggle('removed-item');
+            el.classList.toggle('strike-item');
+        }
+    }
+}
 
 //Create a function that will filter out all completed todo items
 const activeFunction = () => {
@@ -34,5 +47,8 @@ const activeFunction = () => {
 
 //Add event listener to active button to run active function
 activeBtn.addEventListener('click', activeFunction);
+
+//Add event listener to active button to run active function
+allBtn.addEventListener('click', allFunction);
 
 //Create a function that will filter out all active tasks
