@@ -27,34 +27,46 @@ const addItem = () => {
 
 //Create a function that will show all list items
 const allFunction = () => {
+    console.log('clicked');
     let listElements = Array.from(document.querySelectorAll('.list-item'));
     for (let i=0; i<listElements.length; i++) {
         let el = listElements[i];
-        if (el.classList.contains('removed-item')) {
-            el.classList.toggle('removed-item');
-            el.classList.toggle('strike-item');
-        }
+        el.classList.add('show-item');
+        el.classList.remove('removed-item');
     }
+    console.log(listElements);
 }
 
 //Create a function that will filter out all completed todo items
 const activeFunction = () => {
+    console.log('clicked');
     let listElements = Array.from(document.querySelectorAll('.list-item'));
     for (let i=0; i<listElements.length; i++) {
         let el = listElements[i];
         if (el.classList.contains('strike-item')) {
-            el.classList.toggle('removed-item');
+            el.classList.add('removed-item');
+            el.classList.remove('show-item');
+            console.log(listElements);
+        } else if (!el.classList.contains('strike-item')) {
+            el.classList.add('show-item');
+            el.classList.remove('removed-item');
         }
     }
 }
 
 //Create a function that will filter out all active tasks
 const completeFunction = () => {
+    console.log('clicked');
     let listElements = Array.from(document.querySelectorAll('.list-item'));
     for (let i=0; i<listElements.length; i++) {
         let el = listElements[i];
         if (!el.classList.contains('strike-item')) {
-            el.classList.toggle('removed-item');
+            el.classList.remove('show-item');
+            el.classList.add('removed-item');
+            console.log(listElements);
+        } else if (el.classList.contains('strike-item')) {
+            el.classList.add('show-item');
+            el.classList.remove('removed-item');
         }
     }
 }
