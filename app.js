@@ -87,7 +87,7 @@ allBtn.addEventListener('click', allFunction);
 completeBtn.addEventListener('click', completeFunction);
 
 //Add event listener to complete button to run allFunction
-addBtn.addEventListener('click', addItem);
+// addBtn.addEventListener('click', addItem);
 
 //Add event listener to input field to fire on enter key
 todoInput.addEventListener('keydown', function(e) {
