@@ -2,22 +2,19 @@
 <html>
     <head>
         <link rel="stylesheet" href="style.css">
+
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:100,300" rel="stylesheet">
     </head>
     <body>
         <div id="root">
             <h1 id="app-header">Todo List</h1>
             <div id="list-form">
                 <form action="">
-                    <input id="list-value" type="text">
+                    <input id="list-value" type="text" placeholder="What would you like to do?">
                 </form>
             </div>
-            <div id="list-button">
-                <button onclick="addItem()">Add Item!</button>
-            </div>
-            <div>
-                <ul id="dynamic-list" style="list-style: none;"></ul>
-            </div>
-            <div id="buttons">
+            <ul id="dynamic-list" style="list-style: none;"></ul>
+            <div id="targetBtn" class="removed-item">
                 <button class="function-button" id="all-button">All</button>
                 <button class="function-button" id="active-button">Active</button>
                 <button class="function-button" id="complete-button">Completed</button>
