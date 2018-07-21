@@ -7,6 +7,9 @@ let allBtn = document.querySelector('#all-button')
 //Store complete button in variable.
 let completeBtn = document.querySelector('#complete-button');
 
+//Store add button in variable.
+let addBtn = document.querySelector('#add-btn');
+
 //Create a query selector function similar to jQuery 
 const $ = (selector) => {
     return document.querySelector(selector);
@@ -79,3 +82,6 @@ allBtn.addEventListener('click', allFunction);
 
 //Add event listener to complete button to run allFunction
 completeBtn.addEventListener('click', completeFunction);
+
+//Add event listener to complete button to run allFunction
+addBtn.addEventListener('click', addItem);
