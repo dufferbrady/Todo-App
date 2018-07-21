@@ -7,9 +7,6 @@ let allBtn = document.querySelector('#all-button')
 //Store complete button in variable.
 let completeBtn = document.querySelector('#complete-button');
 
-//Store add button in variable.
-let addBtn = document.querySelector('#add-btn');
-
 //Store input field in a variable
 let todoInput = document.getElementById('list-value');
 
@@ -29,6 +26,15 @@ const addItem = () => {
         li.classList.toggle('strike-item');
     });
     return container.appendChild(li);                               //Append the list item to the ul tag and return the value
+}
+
+//Create function to show buttons once todo item has been added
+const showBtns = () => {
+    let btn = document.getElementById("targetBtn");
+    if(btn.classList.contains('removed-item')) {
+        btn.classList.remove('removed-item');
+        btn.classList.add('buttons');
+    }
 }
 
 //Create a function that will show all list items
@@ -86,13 +92,17 @@ allBtn.addEventListener('click', allFunction);
 //Add event listener to complete button to run allFunction
 completeBtn.addEventListener('click', completeFunction);
 
-//Add event listener to complete button to run allFunction
-// addBtn.addEventListener('click', addItem);
-
 //Add event listener to input field to fire on enter key
 todoInput.addEventListener('keydown', function(e) {
     e.preventDefault();
     if(e.keyCode === 13) {
         addItem();
+    }
+})
+
+todoInput.addEventListener('keydown', function(e) {
+    e.preventDefault();
+    if(e.keyCode === 13) {
+        showBtns();
     }
 })
