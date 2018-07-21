@@ -10,6 +10,9 @@ let completeBtn = document.querySelector('#complete-button');
 //Store add button in variable.
 let addBtn = document.querySelector('#add-btn');
 
+//Store input field in a variable
+let todoInput = document.getElementById('list-value');
+
 //Create a query selector function similar to jQuery 
 const $ = (selector) => {
     return document.querySelector(selector);
@@ -85,3 +88,11 @@ completeBtn.addEventListener('click', completeFunction);
 
 //Add event listener to complete button to run allFunction
 addBtn.addEventListener('click', addItem);
+
+//Add event listener to input field to fire on enter key
+todoInput.addEventListener('keydown', function(e) {
+    e.preventDefault();
+    if(e.keyCode === 13) {
+        addItem();
+    }
+})
