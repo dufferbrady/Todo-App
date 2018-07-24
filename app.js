@@ -1,35 +1,55 @@
 //Store the active button in a variable
-let activeBtn = document.querySelector('#active-button')
+const activeBtn = document.querySelector('#active-button')
 
 //Store all button in variable.
-let allBtn = document.querySelector('#all-button')
+const allBtn = document.querySelector('#all-button')
 
 //Store complete button in variable.
-let completeBtn = document.querySelector('#complete-button');
+const completeBtn = document.querySelector('#complete-button');
 
 //Store input field in a variable
-let todoInput = document.getElementById('list-value');
+const todoInput = document.getElementById('list-value');
 
 //Create a query selector function similar to jQuery 
 const $ = (selector) => {
     return document.querySelector(selector);
 }
 
+//Create a strike-through function
+const strikethrough = (e) => e.path[1].children[1].classList.toggle('strike-item');
+
+//Create a function to remove todo item 
+const removeItem = (e) => e.path[1].classList.add('delete-item');
+
 //Create a function that will add user input to list of todo items
-const addItem = () => {
-    let container = document.getElementById("dynamic-list");        //Store the html ul tage in a variable
-    let li = document.createElement('li');                          //Create a list item for each input
-    let item = document.getElementById("list-value").value;         //Store the input value from user in a variable
-    li.setAttribute('class', 'list-item');                          //Give that list item a class tage for style purposes
-    li.textContent = item;                                          //Assign the user input value to the created li tag
-    li.addEventListener('click', () => {                            // Create event listener function to toggle strikethrough class
-        li.classList.toggle('strike-item');
-    });
-    return container.appendChild(li);                               //Append the list item to the ul tag and return the value
+const addItem = (e) => {
+    console.log(e)
+    const container = document.getElementById("dynamic-list");        //Store the html ul tage in a variable
+    const li = document.createElement('li');
+    const checkbox = document.createElement('input');                          //Create a list item for each input
+    const label = document.createElement('label');
+    const item = document.getElementById("list-value").value;         //Store the input value from user in a variable
+    const icon = document.createElement('i');
+    const div = document.createElement('div');
+
+    icon.setAttribute('class', 'fas fa-times')
+    li.setAttribute('class', 'todo-item')
+    checkbox.setAttribute('type', 'checkbox');                          //Give that list item a class tage for style purposes
+    checkbox.setAttribute('id', item);
+    label.setAttribute('for', item)
+    label.setAttribute('class', 'todo-label')
+    label.textContent = item;                                          //Assign the user input value to the created li tag
+    label.addEventListener('click', strikethrough);
+    icon.addEventListener('click', removeItem);
+    container.appendChild(li);
+    li.appendChild(div);
+    div.appendChild(checkbox);                               //Append the list item to the ul tag and return the value
+    div.appendChild(label);
+    li.appendChild(icon);
 }
 
 //Create function to show buttons once todo item has been added
-const showBtns = () => {
+const showBtns = (e) => {
     let btn = document.getElementById("targetBtn");
     if(btn.classList.contains('removed-item')) {
         btn.classList.remove('removed-item');
@@ -39,29 +59,30 @@ const showBtns = () => {
 
 //Create a function that will show all list items
 const allFunction = () => {
-    console.log('clicked');
-    let listElements = Array.from(document.querySelectorAll('.list-item'));
+    const listElements = Array.from(document.querySelectorAll('.todo-item'));
     for (let i=0; i<listElements.length; i++) {
         let el = listElements[i];
+        console.log(el.classList);
         el.classList.add('show-item');
         el.classList.remove('removed-item');
     }
-    console.log(listElements);
 }
 
 //Create a function that will filter out all completed todo items
 const activeFunction = () => {
     console.log('clicked');
-    let listElements = Array.from(document.querySelectorAll('.list-item'));
+    const listElements = Array.from(document.querySelectorAll('.todo-label'));
+    const liTags = Array.from(document.querySelectorAll('.todo-item'));
+    console.log(liTags, listElements);
     for (let i=0; i<listElements.length; i++) {
         let el = listElements[i];
         if (el.classList.contains('strike-item')) {
-            el.classList.add('removed-item');
-            el.classList.remove('show-item');
+            liTags[i].classList.add('removed-item');
+            liTags[i].classList.remove('show-item');
             console.log(listElements);
         } else if (!el.classList.contains('strike-item')) {
-            el.classList.add('show-item');
-            el.classList.remove('removed-item');
+            liTags[i].classList.add('show-item');
+            liTags[i].classList.remove('removed-item');
         }
     }
 }
@@ -69,16 +90,17 @@ const activeFunction = () => {
 //Create a function that will filter out all active tasks
 const completeFunction = () => {
     console.log('clicked');
-    let listElements = Array.from(document.querySelectorAll('.list-item'));
+    const listElements = Array.from(document.querySelectorAll('.todo-label'));
+    const liTags = Array.from(document.querySelectorAll('.todo-item'))
     for (let i=0; i<listElements.length; i++) {
         let el = listElements[i];
         if (!el.classList.contains('strike-item')) {
-            el.classList.remove('show-item');
-            el.classList.add('removed-item');
+            liTags[i].classList.remove('show-item');
+            liTags[i].classList.add('removed-item');
             console.log(listElements);
         } else if (el.classList.contains('strike-item')) {
-            el.classList.add('show-item');
-            el.classList.remove('removed-item');
+            liTags[i].classList.add('show-item');
+            liTags[i].classList.remove('removed-item');
         }
     }
 }
@@ -92,16 +114,19 @@ allBtn.addEventListener('click', allFunction);
 //Add event listener to complete button to run allFunction
 completeBtn.addEventListener('click', completeFunction);
 
+// icons.addEventListener('click', removeItem);
+
 //Add event listener to input field to fire on enter key
 todoInput.addEventListener('keydown', function(e) {
-    e.preventDefault();
+    // e.preventDefault();
     if(e.keyCode === 13) {
         addItem();
     }
 })
 
+//Add event listener to show buttons when an item is added
 todoInput.addEventListener('keydown', function(e) {
-    e.preventDefault();
+    // e.preventDefault();
     if(e.keyCode === 13) {
         showBtns();
     }
