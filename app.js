@@ -68,9 +68,9 @@ const addItem = () => {
     icon.addEventListener('click', removeItem);
     container.appendChild(li);
     li.appendChild(div);
+    li.appendChild(icon);
     div.appendChild(checkbox);                               //Append the list item to the ul tag and return the value
     div.appendChild(label);
-    li.appendChild(icon);
 }
 
 //Create function to show buttons once todo item has been added
@@ -144,16 +144,11 @@ clearBtn.addEventListener('click', clearCompleted);
 
 //Add event listener to input field to fire on enter key
 todoInput.addEventListener('keydown', function(e) {
-    e.preventDefault();
     if(e.keyCode === 13) {
+        console.log("Pressed")
         addItem();
-    }
-})
-
-//Add event listener to show buttons when an item is added
-todoInput.addEventListener('keydown', function(e) {
-    e.preventDefault();
-    if(e.keyCode === 13) {
         showBtns();
+        todoInput.value = "";
+        e.preventDefault();
     }
-})
+});
