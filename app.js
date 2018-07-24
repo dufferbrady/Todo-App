@@ -16,13 +16,14 @@ const $ = (selector) => {
 }
 
 //Create a strike-through function
-const strikethrough = (e) => e.path[1].classList.toggle('strike-item');
+const strikethrough = (e) => e.path[1].children[1].classList.toggle('strike-item');
 
 //Create a function to remove todo item 
 const removeItem = (e) => e.path[1].classList.add('delete-item');
 
 //Create a function that will add user input to list of todo items
-const addItem = () => {
+const addItem = (e) => {
+    console.log(e)
     const container = document.getElementById("dynamic-list");        //Store the html ul tage in a variable
     const li = document.createElement('li');
     const checkbox = document.createElement('input');                          //Create a list item for each input
@@ -41,16 +42,16 @@ const addItem = () => {
     label.addEventListener('click', strikethrough);
     icon.addEventListener('click', removeItem);
     container.appendChild(li);
-    li.appendChild(checkbox);                               //Append the list item to the ul tag and return the value
-    li.appendChild(label);
+    li.appendChild(div);
+    div.appendChild(checkbox);                               //Append the list item to the ul tag and return the value
+    div.appendChild(label);
     li.appendChild(icon);
 }
 
 //Create function to show buttons once todo item has been added
-const showBtns = () => {
+const showBtns = (e) => {
     let btn = document.getElementById("targetBtn");
     if(btn.classList.contains('removed-item')) {
-        console.log(btn.classList);
         btn.classList.remove('removed-item');
         btn.classList.add('buttons');
     }
@@ -117,7 +118,7 @@ completeBtn.addEventListener('click', completeFunction);
 
 //Add event listener to input field to fire on enter key
 todoInput.addEventListener('keydown', function(e) {
-    e.preventDefault();
+    // e.preventDefault();
     if(e.keyCode === 13) {
         addItem();
     }
@@ -125,7 +126,7 @@ todoInput.addEventListener('keydown', function(e) {
 
 //Add event listener to show buttons when an item is added
 todoInput.addEventListener('keydown', function(e) {
-    e.preventDefault();
+    // e.preventDefault();
     if(e.keyCode === 13) {
         showBtns();
     }
