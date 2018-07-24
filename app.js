@@ -10,9 +10,31 @@ const completeBtn = document.querySelector('#complete-button');
 //Store input field in a variable
 const todoInput = document.getElementById('list-value');
 
+//Store ul tag in a variable
+const dynamicList = document.querySelector('#dynamic-list');
+
+//Store clear completed button in a variable
+const clearBtn = document.getElementById('clear-button');
+
+//Todo list length
+// const todoLength = document.getElementById('dynamic-list');
+
 //Create a query selector function similar to jQuery 
-const $ = (selector) => {
-    return document.querySelector(selector);
+// const $ = (selector) => {
+//     return document.querySelector(selector);
+// }
+
+//Create a clear completed function
+const clearCompleted = () => {
+    let labels = Array.from(dynamicList.querySelectorAll('label'));
+    let items = Array.from(dynamicList.querySelectorAll('li'));
+    for (let i=0; i<items.length; i++) {
+        let label = labels[i];
+        let item = items[i];
+        if(label.classList.contains('strike-item')) {
+            item.classList.add('delete-item');
+        }
+    }
 }
 
 //Create a strike-through function
@@ -21,9 +43,12 @@ const strikethrough = (e) => e.path[1].children[1].classList.toggle('strike-item
 //Create a function to remove todo item 
 const removeItem = (e) => e.path[1].classList.add('delete-item');
 
+//Create a function that will create the todo item tracker
+const itemTracker = (e) => {
+    e = document.createElement('div');
+}
 //Create a function that will add user input to list of todo items
-const addItem = (e) => {
-    console.log(e)
+const addItem = () => {
     const container = document.getElementById("dynamic-list");        //Store the html ul tage in a variable
     const li = document.createElement('li');
     const checkbox = document.createElement('input');                          //Create a list item for each input
@@ -114,11 +139,12 @@ allBtn.addEventListener('click', allFunction);
 //Add event listener to complete button to run allFunction
 completeBtn.addEventListener('click', completeFunction);
 
-// icons.addEventListener('click', removeItem);
+//Add event listener to clear completed button to run function when pressed
+clearBtn.addEventListener('click', clearCompleted);
 
 //Add event listener to input field to fire on enter key
 todoInput.addEventListener('keydown', function(e) {
-    // e.preventDefault();
+    e.preventDefault();
     if(e.keyCode === 13) {
         addItem();
     }
@@ -126,7 +152,7 @@ todoInput.addEventListener('keydown', function(e) {
 
 //Add event listener to show buttons when an item is added
 todoInput.addEventListener('keydown', function(e) {
-    // e.preventDefault();
+    e.preventDefault();
     if(e.keyCode === 13) {
         showBtns();
     }
