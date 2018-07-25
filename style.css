@@ -61,6 +61,18 @@ body {
     justify-content: space-between;
 }
 
+.strike-item {
+    width: 35vw;
+    height: auto;
+    font-size: 175%;
+    padding-left: 5%;
+    background-color: #FFFFFF;
+    font-weight: 100;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .todo-item div {
     display: flex;
     flex-direction: row;
@@ -95,6 +107,7 @@ input:-webkit-autofill {
 
 #leftTab {
     width: 25%;
+
 }
 
 .buttons {
@@ -145,7 +158,7 @@ input:-webkit-autofill {
     align-items: center;
 }
 
-.strike-item {
+.strike-label {
     text-decoration: line-through;
 }
 

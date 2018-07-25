@@ -16,44 +16,17 @@ const dynamicList = document.querySelector('#dynamic-list');
 //Store clear completed button in a variable
 const clearBtn = document.getElementById('clear-button');
 
-//Store todo items trackers in a varaible
-// const itemTracker = document.getElementById('itemTracker');
-
-//Todo list length
-// const todoLength = document.getElementById('dynamic-list');
-
-//Create a query selector function similar to jQuery 
-// const $ = (selector) => {
-//     return document.querySelector(selector);
-// }
 
 const itemTracker = () => {
     let button = document.getElementById('itemTracker');
-    let listLength = document.getElementById('dynamic-list').getElementsByTagName('li').length;
+    let listLength = document.getElementById('dynamic-list').getElementsByClassName('todo-item').length;
 
-    button.textContent = listLength + " Items Left";
-    console.log(listLength);
-}
-
-//Create a clear completed function
-const clearCompleted = () => {
-    let labels = Array.from(dynamicList.querySelectorAll('label'));
-    let items = Array.from(dynamicList.querySelectorAll('li'));
-    for (let i=0; i<items.length; i++) {
-        let label = labels[i];
-        let item = items[i];
-        if(label.classList.contains('strike-item')) {
-            item.classList.add('delete-item');
-        }
+    if(listLength !== 1) {
+        button.textContent = (listLength + " Items Left");
+    } else {
+        button.textContent = (listLength + " Item Left");
     }
 }
-
-//Create a strike-through function
-const strikethrough = (e) => e.path[1].children[1].classList.toggle('strike-item');
-
-//Create a function to remove todo item 
-// const removeItem = (e) => e.path[1].classList.add('delete-item') 
-// const removeItem = (e) => console.log(e);
 
 //Create a function that will add user input to list of todo items
 const addItem = () => {
@@ -66,21 +39,35 @@ const addItem = () => {
     const div = document.createElement('div');
 
     icon.setAttribute('class', 'fas fa-times')
-    li.setAttribute('class', 'todo-item')
+    li.setAttribute('class', 'todo-item');
     li.setAttribute('id', item);
     checkbox.setAttribute('type', 'checkbox');                          //Give that list item a class tage for style purposes
     checkbox.setAttribute('id', item);
     label.setAttribute('for', item)
     label.setAttribute('class', 'todo-label')
     label.textContent = item;                                          //Assign the user input value to the created li tag
-    label.addEventListener('click', strikethrough);
+    //Add strikethough label on click
+    label.addEventListener('click', function() {
+        li.classList.toggle('todo-item');
+        li.classList.toggle('strike-item');
+        label.classList.toggle('strike-label');
+        let button = document.getElementById('itemTracker');
+        let listLength = document.getElementById('dynamic-list').getElementsByClassName('todo-item').length;
+        if(listLength !== 1) {
+            button.textContent = (listLength + " Items Left");
+        } else {
+            button.textContent = (listLength + " Item Left");
+        }
+    });
+    //Remove li from list on click of icon
     icon.addEventListener('click', function() {
         let removed = document.getElementById(item);
         container.removeChild(removed);
     });
+    //Update item tracker when item is removed
     icon.addEventListener('click', function() {
         let button = document.getElementById('itemTracker');
-        let listLength = document.getElementById('dynamic-list').getElementsByTagName('li').length;
+        let listLength = document.getElementById('dynamic-list').getElementsByClassName('todo-item').length;
 
         button.textContent = (listLength + " Items Left");
     });
@@ -103,10 +90,10 @@ const showBtns = (e) => {
 
 //Create a function that will show all list items
 const allFunction = () => {
-    const listElements = Array.from(document.querySelectorAll('.todo-item'));
+    const listElements = Array.from(document.getElementsByTagName('li'));
     for (let i=0; i<listElements.length; i++) {
         let el = listElements[i];
-        console.log(el.classList);
+        console.log(el);
         el.classList.add('show-item');
         el.classList.remove('removed-item');
     }
@@ -116,15 +103,15 @@ const allFunction = () => {
 const activeFunction = () => {
     console.log('clicked');
     const listElements = Array.from(document.querySelectorAll('.todo-label'));
-    const liTags = Array.from(document.querySelectorAll('.todo-item'));
+    const liTags = Array.from(document.getElementsByTagName('li'));
     console.log(liTags, listElements);
     for (let i=0; i<listElements.length; i++) {
         let el = listElements[i];
-        if (el.classList.contains('strike-item')) {
+        if (el.classList.contains('strike-label')) {
             liTags[i].classList.add('removed-item');
             liTags[i].classList.remove('show-item');
             console.log(listElements);
-        } else if (!el.classList.contains('strike-item')) {
+        } else if (!el.classList.contains('strike-label')) {
             liTags[i].classList.add('show-item');
             liTags[i].classList.remove('removed-item');
         }
@@ -135,16 +122,32 @@ const activeFunction = () => {
 const completeFunction = () => {
     console.log('clicked');
     const listElements = Array.from(document.querySelectorAll('.todo-label'));
-    const liTags = Array.from(document.querySelectorAll('.todo-item'))
+    const liTags = Array.from(document.getElementsByTagName('li'));
     for (let i=0; i<listElements.length; i++) {
         let el = listElements[i];
-        if (!el.classList.contains('strike-item')) {
-            liTags[i].classList.remove('show-item');
-            liTags[i].classList.add('removed-item');
+        let tag = liTags[i]
+        console.log(el);
+        console.log(tag);
+        if (!el.classList.contains('strike-label')) {
+            tag.classList.remove('show-item');
+            tag.classList.add('removed-item');
             console.log(listElements);
-        } else if (el.classList.contains('strike-item')) {
-            liTags[i].classList.add('show-item');
-            liTags[i].classList.remove('removed-item');
+        } else if (el.classList.contains('strike-label')) {
+            tag.classList.add('show-item');
+            tag.classList.remove('removed-item');
+        }
+    }
+}
+
+//Create a clear completed function
+const clearCompleted = () => {
+    let labels = Array.from(dynamicList.querySelectorAll('label'));
+    let items = Array.from(dynamicList.querySelectorAll('li'));
+    for (let i=0; i<items.length; i++) {
+        let label = labels[i];
+        let item = items[i];
+        if(label.classList.contains('strike-label')) {
+            item.classList.add('delete-item');
         }
     }
 }
