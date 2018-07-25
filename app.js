@@ -37,10 +37,11 @@ const addItem = () => {
     const item = document.getElementById("list-value").value;         //Store the input value from user in a variable
     const icon = document.createElement('i');
     const div = document.createElement('div');
+    let itemId = item + 'Id';
 
     icon.setAttribute('class', 'fas fa-times')
     li.setAttribute('class', 'todo-item');
-    li.setAttribute('id', item);
+    li.setAttribute('id', itemId);
     checkbox.setAttribute('type', 'checkbox');                          //Give that list item a class tage for style purposes
     checkbox.setAttribute('id', item);
     label.setAttribute('for', item)
@@ -61,7 +62,7 @@ const addItem = () => {
     });
     //Remove li from list on click of icon
     icon.addEventListener('click', function() {
-        let removed = document.getElementById(item);
+        let removed = document.getElementById(itemId);
         container.removeChild(removed);
         //If ul list is empty rempve buttons
         if(container.getElementsByTagName('li').length === 0) {
