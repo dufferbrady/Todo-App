@@ -16,7 +16,7 @@ const dynamicList = document.querySelector('#dynamic-list');
 //Store clear completed button in a variable
 const clearBtn = document.getElementById('clear-button');
 
-
+//Create a function that will give the user a value of item that still have to be done.
 const itemTracker = () => {
     let button = document.getElementById('itemTracker');
     let listLength = document.getElementById('dynamic-list').getElementsByClassName('todo-item').length;
@@ -63,6 +63,12 @@ const addItem = () => {
     icon.addEventListener('click', function() {
         let removed = document.getElementById(item);
         container.removeChild(removed);
+        //If ul list is empty rempve buttons
+        if(container.getElementsByTagName('li').length === 0) {
+            let buttons = document.getElementById('targetBtn')
+            buttons.classList.remove('show-item');
+            buttons.classList.add('removed-item');
+        }
     });
     //Update item tracker when item is removed
     icon.addEventListener('click', function() {
@@ -85,7 +91,6 @@ const showBtns = (e) => {
         btn.classList.remove('removed-item');
         btn.classList.add('buttons');
     }
-    itemTracker.disabled = true;
 }
 
 //Create a function that will show all list items
@@ -143,12 +148,21 @@ const completeFunction = () => {
 const clearCompleted = () => {
     let labels = Array.from(dynamicList.querySelectorAll('label'));
     let items = Array.from(dynamicList.querySelectorAll('li'));
+    let container = document.getElementById("dynamic-list");
+    let itemsLength = document.getElementById("dynamic-list").getElementsByClassName('todo-item').length;
+    console.log(itemsLength);
     for (let i=0; i<items.length; i++) {
         let label = labels[i];
         let item = items[i];
         if(label.classList.contains('strike-label')) {
-            item.classList.add('delete-item');
+            container.removeChild(item);
         }
+    }
+    //If ul list is empty rempve buttons
+    if(itemsLength === 0) {
+        let buttons = document.getElementById('targetBtn')
+        buttons.classList.remove('show-item');
+        buttons.classList.add('removed-item');
     }
 }
 
