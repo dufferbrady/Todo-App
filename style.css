@@ -38,6 +38,17 @@ body {
     padding-left: 5%;
 }
 
+/* #targetBtn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+} */
+
+#list-value:focus {
+    outline: none;
+}
+
 .todo-item {
     width: 35vw;
     height: auto;
@@ -82,13 +93,25 @@ input:-webkit-autofill {
     justify-content: center;
 }
 
+#leftTab {
+    width: 25%;
+}
+
 .buttons {
-    width: 35vw;
+    width: 40vw;
     background-color: #F2F4F4;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     border-radius: 15px;
+}
+
+#functionalBtns {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .function-button {
@@ -105,6 +128,23 @@ input:-webkit-autofill {
     border: 1px solid #FFBDE7;
     outline: none;
 }
+
+#leftTab {
+    width: 25%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#rightTab {
+    width: 25%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
 .strike-item {
     text-decoration: line-through;
 }

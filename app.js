@@ -16,6 +16,9 @@ const dynamicList = document.querySelector('#dynamic-list');
 //Store clear completed button in a variable
 const clearBtn = document.getElementById('clear-button');
 
+//Store todo items trackers in a varaible
+// const itemTracker = document.getElementById('itemTracker');
+
 //Todo list length
 // const todoLength = document.getElementById('dynamic-list');
 
@@ -23,6 +26,14 @@ const clearBtn = document.getElementById('clear-button');
 // const $ = (selector) => {
 //     return document.querySelector(selector);
 // }
+
+const itemTracker = () => {
+    let button = document.getElementById('itemTracker');
+    let listLength = document.getElementById('dynamic-list').getElementsByTagName('li').length;
+
+    button.textContent = listLength + " Items Left";
+    console.log(listLength);
+}
 
 //Create a clear completed function
 const clearCompleted = () => {
@@ -41,12 +52,9 @@ const clearCompleted = () => {
 const strikethrough = (e) => e.path[1].children[1].classList.toggle('strike-item');
 
 //Create a function to remove todo item 
-const removeItem = (e) => e.path[1].classList.add('delete-item');
+// const removeItem = (e) => e.path[1].classList.add('delete-item') 
+// const removeItem = (e) => console.log(e);
 
-//Create a function that will create the todo item tracker
-const itemTracker = (e) => {
-    e = document.createElement('div');
-}
 //Create a function that will add user input to list of todo items
 const addItem = () => {
     const container = document.getElementById("dynamic-list");        //Store the html ul tage in a variable
@@ -59,13 +67,23 @@ const addItem = () => {
 
     icon.setAttribute('class', 'fas fa-times')
     li.setAttribute('class', 'todo-item')
+    li.setAttribute('id', item);
     checkbox.setAttribute('type', 'checkbox');                          //Give that list item a class tage for style purposes
     checkbox.setAttribute('id', item);
     label.setAttribute('for', item)
     label.setAttribute('class', 'todo-label')
     label.textContent = item;                                          //Assign the user input value to the created li tag
     label.addEventListener('click', strikethrough);
-    icon.addEventListener('click', removeItem);
+    icon.addEventListener('click', function() {
+        let removed = document.getElementById(item);
+        container.removeChild(removed);
+    });
+    icon.addEventListener('click', function() {
+        let button = document.getElementById('itemTracker');
+        let listLength = document.getElementById('dynamic-list').getElementsByTagName('li').length;
+
+        button.textContent = (listLength + " Items Left");
+    });
     container.appendChild(li);
     li.appendChild(div);
     li.appendChild(icon);
@@ -80,6 +98,7 @@ const showBtns = (e) => {
         btn.classList.remove('removed-item');
         btn.classList.add('buttons');
     }
+    itemTracker.disabled = true;
 }
 
 //Create a function that will show all list items
@@ -145,8 +164,8 @@ clearBtn.addEventListener('click', clearCompleted);
 //Add event listener to input field to fire on enter key
 todoInput.addEventListener('keydown', function(e) {
     if(e.keyCode === 13) {
-        console.log("Pressed")
         addItem();
+        itemTracker();
         showBtns();
         todoInput.value = "";
         e.preventDefault();
