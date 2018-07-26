@@ -198,21 +198,21 @@ input[type=checkbox] {
 }
 
 .show-item {
-    display: block;
+    display: flex;
 }
 
 .delete-item {
     display: none;
 }
 
-i {
+.fa-times {
     font-size: 0.75em;
     margin-right: 5%;
     color: #E94A68;
     opacity: 0;
 }
 
-li:hover i {
+li:hover i[class*="fa-times"] {
     opacity: 1;
 }
 
@@ -227,4 +227,19 @@ li:hover i {
 
 #secondPart {
     font-weight: bolder;
+}
+
+.fa-circle {
+    font-size: 1.25em;
+    color: #E94A68;
+}
+
+.fa-check {
+    font-size: 0.75em;
+    color: #E94A68;
+    opacity: 0;
+}
+
+.checked {
+    opacity: 1;
 }
