@@ -36,12 +36,13 @@ body {
 }
 
 #list-value {
+    font-family: 'Montserrat', sans-serif;
     width: 35vw;
-    height: 7.5vh;
+    height: auto;
     padding-left: 5vw;
-    font-size: 1.25em;
+    font-size: 1.75em;
     background-color: #FFFFFF;
-    font-weight: 100;
+    font-weight: 300;
     border: none;
     z-index: 3;
     border: solid rgba(211,211,211, 1);
@@ -57,7 +58,7 @@ body {
     height: 10vh;
     font-size: 175%;
     background-color: #FFFFFF;
-    font-weight: 100;
+    font-weight: 300;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -71,7 +72,7 @@ body {
     height: 10vh;
     font-size: 175%;
     background-color: #FFFFFF;
-    font-weight: 100;
+    font-weight: 300;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -154,6 +155,11 @@ input[type=checkbox] {
     height: 90%;
     vertical-align: middle;
     border-radius: 5px;
+    cursor: pointer;
+}
+
+#itemTracker {
+    cursor: auto;
 }
 
 .function-button:focus {
