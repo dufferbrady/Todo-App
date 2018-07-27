@@ -164,7 +164,6 @@ const clearCompleted = () => {
     let listElements = Array.from(dynamicList.querySelectorAll('.todo-label'));
     let liTags = Array.from(dynamicList.querySelectorAll('li'));
     let container = document.getElementById("dynamic-list");
-    let itemsLength = document.getElementById("dynamic-list").getElementsByClassName('todo-item').length;
     for (let i=0; i<liTags.length; i++) {
         let el = listElements[i];
         let tag = liTags[i];
@@ -173,6 +172,7 @@ const clearCompleted = () => {
         }
     }
     //If ul list is empty rempve buttons
+    let itemsLength = document.getElementById("dynamic-list").getElementsByTagName('li').length;
     if(itemsLength === 0) {
         let buttons = document.getElementById('targetBtn')
         buttons.classList.remove('show-item');
