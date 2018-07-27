@@ -112,13 +112,11 @@ const showBtns = (e) => {
 //Create a function that will show all list items
 const allFunction = () => {
     const listElements = Array.from(document.getElementsByTagName('li'));
-    for (let i=0; i<listElements.length; i++) {
-        let el = listElements[i];
-        if(!el.classList.contains('show-item'))
-        el.classList.add('show-item');
-        el.classList.remove('removed-item');
-    }
-    console.log(listElements);
+    let allElements = listElements.filter(el => !el.classList.contains('show-item'));
+    allElements.map(item => {
+        item.classList.add('show-item');
+        item.classList.remove('removed-item');
+    });
 }
 
 //Create a function that will filter out all completed todo items
@@ -136,8 +134,6 @@ const activeFunction = () => {
             tag.classList.remove('removed-item');
         }
     }
-    console.log(listElements);
-    console.log(liTags);
 }
 
 //Create a function that will filter out all active tasks
@@ -155,8 +151,6 @@ const completeFunction = () => {
             tag.classList.remove('removed-item');
         }
     }
-    console.log(listElements);
-    console.log(liTags);
 }
 
 //Create a clear completed function
@@ -178,8 +172,6 @@ const clearCompleted = () => {
         buttons.classList.remove('show-item');
         buttons.classList.add('removed-item');
     }
-    console.log(listElements);
-    console.log(liTags);
 }
 
 //Add event listener to active button to run activeFunction
