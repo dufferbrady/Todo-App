@@ -64,7 +64,7 @@ body {
     justify-content: space-between;
     border: solid rgba(211,211,211, 1);
     border-width: 0.02px 0px;
-
+    cursor: pointer;
 }
 
 .strike-item {
@@ -78,6 +78,7 @@ body {
     justify-content: space-between;
     border: solid rgba(211,211,211, 1);
     border-width: 0.02px 0px;
+    cursor: pointer;
 }
 
 .liLeftTab {
