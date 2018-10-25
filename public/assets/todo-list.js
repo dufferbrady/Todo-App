@@ -2,19 +2,19 @@
 const activeBtn = $('#active-button')
 
 //Store all button in variable.
-const allBtn = document.querySelector('#all-button')
+const allBtn = $('#all-button')
 
 //Store complete button in variable.
-const completeBtn = document.querySelector('#complete-button');
+const completeBtn = $('#complete-button');
 
 //Store input field in a variable
 const todoInput = document.getElementById('list-value');
 
 //Store ul tag in a variable
-const dynamicList = document.querySelector('#dynamic-list');
+const dynamicList = document.getElementById('dynamic-list');
 
 //Store clear completed button in a variable
-const clearBtn = document.getElementById('clear-button');
+const clearBtn = $('#clear-button');
 
 //Create a function that will give the user a value of item that still have to be done.
 const itemTracker = () => {
@@ -26,6 +26,37 @@ const itemTracker = () => {
     } else {
         button.textContent = (listLength + " Item Left");
     }
+}
+
+//Function to strike-through the todo item text and update counter
+const strikeText = function(text) {
+    text.classList.toggle('strike-label');
+    text.parentNode.parentNode.classList.toggle('available-item');
+    text.parentNode.firstChild.childNodes[1].classList.toggle('checked')
+    let button = document.getElementById('itemTracker');
+    let listLength = document.getElementById('dynamic-list').getElementsByClassName('available-item').length;
+    if(listLength !== 1) {
+        button.textContent = (listLength + " Items Left");
+    } else {
+        button.textContent = (listLength + " Item Left");
+    }
+};
+
+//A function to remove the todo item when user clicks remove icon
+const removeTodo = function(root, removeIcon) {
+    removeIcon.parentNode.parentNode.removeChild(removeIcon.parentNode);    //When remove icon is clicked remove the todo
+    if(root.getElementsByTagName('li').length === 0) {                      //If ul list is empty remove buttons
+        let buttons = document.getElementById('targetBtn')
+        buttons.classList.remove('show-item');
+        buttons.classList.add('removed-item');
+    }
+};
+
+//function to keep traack of the todo item counter and change as items are added/removed
+const updateCount = () => {
+    let button = document.getElementById('itemTracker');
+    let listLength = document.getElementById('dynamic-list').getElementsByClassName('todo-item').length;
+    button.textContent = (listLength + " Items Left");
 }
 
 //Create a function that will add user input to list of todo items
@@ -44,8 +75,8 @@ const addItem = () => {
     div1.setAttribute('class', 'liLeftTab')
 
     //Create an icon in the li for the clear function
-    const icon1 = document.createElement('i');
-    icon1.setAttribute('class', 'fas fa-times')
+    const removeIcon = document.createElement('i');
+    removeIcon.setAttribute('class', 'fas fa-times')
 
     //Create another div in the first div that will hold the two checkbox icons
     const div2 = document.createElement('div');
@@ -64,38 +95,21 @@ const addItem = () => {
 
     //Add strikethough label on click
     text.addEventListener('click', function() {
-        li.classList.toggle('available-item');
-        icon3.classList.toggle('checked')
-        text.classList.toggle('strike-label');
-        let button = document.getElementById('itemTracker');
-        let listLength = document.getElementById('dynamic-list').getElementsByClassName('available-item').length;
-        if(listLength !== 1) {
-            button.textContent = (listLength + " Items Left");
-        } else {
-            button.textContent = (listLength + " Item Left");
-        }
+        strikeText(this);
     });
     //Remove li from list on click of icon
-    icon1.addEventListener('click', function() {
-        let removed = document.getElementById(itemId);
-        container.removeChild(removed);
-        //If ul list is empty rempve buttons
-        if(container.getElementsByTagName('li').length === 0) {
-            let buttons = document.getElementById('targetBtn')
-            buttons.classList.remove('show-item');
-            buttons.classList.add('removed-item');
-        }
+    removeIcon.addEventListener('click', function() {
+        removeTodo(container, this);
     });
-    //Update item tracker when item is removed
-    icon1.addEventListener('click', function() {
-        let button = document.getElementById('itemTracker');
-        let listLength = document.getElementById('dynamic-list').getElementsByClassName('todo-item').length;
 
-        button.textContent = (listLength + " Items Left");
+    // Update item tracker when item is removed
+    removeIcon.addEventListener('click', function() {
+        updateCount();
     });
+
     container.appendChild(li);
     li.appendChild(div1);
-    li.appendChild(icon1);
+    li.appendChild(removeIcon);
     div1.appendChild(div2);                               //Append the list item to the ul tag and return the value
     div2.appendChild(icon2);
     div2.appendChild(icon3);
@@ -178,21 +192,23 @@ const clearCompleted = () => {
 activeBtn.on('click', activeFunction);
 
 //Add event listener to all button to run allFunction
-allBtn.addEventListener('click', allFunction);
+allBtn.on('click', allFunction);
 
 //Add event listener to complete button to run allFunction
-completeBtn.addEventListener('click', completeFunction);
+completeBtn.on('click', completeFunction);
 
 //Add event listener to clear completed button to run function when pressed
-clearBtn.addEventListener('click', clearCompleted);
+clearBtn.on('click', clearCompleted);
 
 //Add event listener to input field to fire on enter key
-todoInput.addEventListener('keydown', function(e) {
-    if(e.keyCode === 13) {
+todoInput.addEventListener('keydown', e => {
+    let key = e.which;
+    if(key === 13) {
+        e.preventDefault()
+        console.log("Pressed");
         addItem();
         itemTracker();
         showBtns();
         todoInput.value = "";
-        e.preventDefault();
     }
 });
