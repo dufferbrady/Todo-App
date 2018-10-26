@@ -16,11 +16,10 @@ const dynamicList = document.getElementById('dynamic-list');
 //Store clear completed button in a variable
 const clearBtn = $('#clear-button');
 
-//Create a function that will give the user a value of item that still have to be done.
+//Create a function that will give the user a number of items that still have to be done.
 const itemTracker = () => {
     let button = document.getElementById('itemTracker');
     let listLength = document.getElementById('dynamic-list').getElementsByClassName('todo-item').length;
-
     if(listLength !== 1) {
         button.textContent = (listLength + " Items Left");
     } else {
@@ -52,68 +51,65 @@ const removeTodo = function(root, removeIcon) {
     }
 };
 
-//function to keep traack of the todo item counter and change as items are added/removed
-const updateCount = () => {
-    let button = document.getElementById('itemTracker');
-    let listLength = document.getElementById('dynamic-list').getElementsByClassName('todo-item').length;
-    button.textContent = (listLength + " Items Left");
-}
-
-//Create a function that will add user input to list of todo items
-const addItem = () => {
-    //Create a container for all todo items
-    const container = document.getElementById("dynamic-list");  
-
-    //Create an li to hold all todo item info
-    const li = document.createElement('li');
-    const item = document.getElementById("list-value").value;         //Store the input value from user in a variable
-    let itemId = item + 'Id';
-    li.setAttribute('class', 'todo-item available-item');
-    li.setAttribute('id', itemId);
-    //Create a div in the li to hold the checkbox icons and the text
-    const div1 = document.createElement('div');
-    div1.setAttribute('class', 'liLeftTab')
-
-    //Create an icon in the li for the clear function
-    const removeIcon = document.createElement('i');
+//a function to delete the todo when the user clicks the remove icon
+const deleteItem = (container, listItem) => {
+    const removeIcon = document.createElement('i');                     //Create an icon in the li for the clear function
     removeIcon.setAttribute('class', 'fas fa-times')
-
-    //Create another div in the first div that will hold the two checkbox icons
-    const div2 = document.createElement('div');
-    div2.setAttribute('class', 'fa-stack');
-
-    //In the second div create two icons that will show the checkboxs when user clicks each text
-    const icon2 = document.createElement('i');
-    const icon3 = document.createElement('i');
-    icon2.setAttribute('class', 'far fa-circle fa-stack-1x');
-    icon3.setAttribute('class', 'fas fa-check fa-stack-1x');
-
-    //create a span  in the first div that will hold the users text
-    const text = document.createElement('span');
-    text.setAttribute('class', 'todo-label');
-    text.textContent = item;
-
-    //Add strikethough label on click
-    text.addEventListener('click', function() {
-        strikeText(this);
-    });
-    //Remove li from list on click of icon
-    removeIcon.addEventListener('click', function() {
+    listItem.appendChild(removeIcon);
+    removeIcon.addEventListener('click', function() {                   //Remove li from list on click of icon
         removeTodo(container, this);
     });
-
-    // Update item tracker when item is removed
-    removeIcon.addEventListener('click', function() {
-        updateCount();
+    removeIcon.addEventListener('click', function() {                   // Update item tracker when item is removed
+        itemTracker();
     });
+};
 
-    container.appendChild(li);
-    li.appendChild(div1);
-    li.appendChild(removeIcon);
-    div1.appendChild(div2);                               //Append the list item to the ul tag and return the value
-    div2.appendChild(icon2);
-    div2.appendChild(icon3);
-    div1.appendChild(text);
+//construct the icons to show when a todo has/hasn't been completed
+const iconConstructor = (leftTab) => {
+    const checkboxIconsContainer = document.createElement('div');            //Create a div that will hold the two checkbox icons
+    const circleIcon = document.createElement('i');                          //Create a circle icon 
+    const checkIcon = document.createElement('i');                           //create a tick icon stacked on the circle icon that will only show when a todo has been strike-through
+
+    checkboxIconsContainer.setAttribute('class', 'fa-stack');
+    circleIcon.setAttribute('class', 'far fa-circle fa-stack-1x');
+    checkIcon.setAttribute('class', 'fas fa-check fa-stack-1x');
+
+    leftTab.appendChild(checkboxIconsContainer);                           //Append the icons container to its parent
+    checkboxIconsContainer.appendChild(circleIcon);                        //Append the circle icon to the icons container
+    checkboxIconsContainer.appendChild(checkIcon);                         //Append the tick icon to the icons container
+}
+
+//create the text box for the todo text
+const textBox = (listItem, input) => {
+    const leftTab = document.createElement('div');                      //create a div to store the text and check icons 
+    const text = document.createElement('span');                        //create a span  in the first div that will hold the users text
+    iconConstructor(leftTab);                                           //construct the icons to show when a todo has been completed
+    leftTab.setAttribute('class', 'liLeftTab')
+    text.setAttribute('class', 'todo-label');
+    text.textContent = input;
+    text.addEventListener('click', function() {                         //Add strikethough to the todo text when clicked
+        strikeText(this);
+    });
+    listItem.appendChild(leftTab);                                      //append the left tab container to the todo container
+    leftTab.appendChild(text);                                          //append the text to the lef tab container
+};
+
+//create the todo item from users input
+const createTodo = container => {
+    const li = document.createElement('li');                            //Create an li to hold all todo item info
+    const text = document.getElementById("list-value").value;           //Store the input value from user in a variable
+    let itemId = text + 'Id';                                           //Give each todo a unique id based on the users input
+    li.setAttribute('class', 'todo-item available-item');
+    li.setAttribute('id', itemId);
+    container.appendChild(li);                                          //Append the list item to the container
+    textBox(li, text);                                                  //create the block to store the users todo text
+    deleteItem(container, li);
+};
+
+//Create a container for the users todo item
+const addItem = () => {
+    const container = document.getElementById("dynamic-list");          //Create a container for all todo items
+    createTodo(container);                                              //Add todo to the container
 }
 
 //Create function to show buttons once todo item has been added
